@@ -22,7 +22,7 @@ docker network create poc --attachable
 - Create a keyfile
 ```bash
 openssl rand -base64 756 > ${PWD}/mongo-keyfile
-chmod 600 ${PWD}/mongo-keyfile
+chmod 400 ${PWD}/mongo-keyfile
 chown 999:999 ${PWD}/mongo-keyfile
 ```
 
