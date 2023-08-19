@@ -2,13 +2,12 @@
 
 - Useful Links
 - https://hub.docker.com/_/mongo
-- https://docs.docker.com/engine/reference/commandline/network_connect/#:~:text=You%20can%20connect%20a%20container%20to%20one%20or%20more%20networks,container%20bridge%20and%20overlay%20networks.
 - https://www.mongodb.com/docs/v4.4/
 
 - MongoAtlas Live Migration
 - https://www.mongodb.com/docs/atlas/migration-from-com/
 
-
+- https://docs.docker.com/engine/reference/commandline/network_connect
 - Connect a running container to a network🔗
 ```bash
 docker network connect <network> <container>
