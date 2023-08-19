@@ -86,7 +86,9 @@ rs.status()
 - Import Collection
 ```bash
 git clone https://github.com/neelabalan/mongodb-sample-dataset.git
+
 docker cp listingsAndReviews.json main-mongo-source:/listingsAndReviews.json
+
 mongoimport --host main-mongo-source --db poc --collection collectionName --file listingsAndReviews.json \
 --username mongoadmin --password secret --authenticationDatabase admin
 ```
