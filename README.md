@@ -103,3 +103,11 @@ docker run --name mongo-express --network poc \
 -e ME_CONFIG_MONGODB_URL='mongodb://mongoadmin:secret@main-mongo-source:27017/' \
 -id mongo-express:latest
 ```
+- All Volumes Remove
+```bash
+docker volume ls -q | xargs docker volume rm
+```
+- All Containers Removed
+```bash
+docker volume ls -q | xargs docker volume rm
+```
