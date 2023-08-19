@@ -109,5 +109,5 @@ docker volume ls -q | xargs docker volume rm
 ```
 - All Containers Removed
 ```bash
-docker volume ls -q | xargs docker volume rm
+docker rm -f $(docker ps -aq)
 ```
