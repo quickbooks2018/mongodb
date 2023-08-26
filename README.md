@@ -111,3 +111,21 @@ docker volume ls -q | xargs docker volume rm
 ```bash
 docker rm -f $(docker ps -aq)
 ```
+
+- MongoDB Shell
+```bash
+mongo "mongodb+srv://USERNAME:PASSWORD@ENDPOINT/DATABASENAME?readPreference=secondary"
+
+mongosh "mongodb+srv://USERNAME:PASSWORD@ENDPOINT/DATABASENAME?readPreference=secondary"
+```
+  
+- 1. List Databases: To list databases, use the command
+```bash
+ show dbs
+```
+- 2. List Collections:
+```bash
+use your_database_name
+```
+
+- 3. show collections
