@@ -231,7 +231,7 @@ rs.initiate({
 rs.status() 
 ```
 
-- Kinf Kubernetes Cluster Setup
+- Kind Kubernetes Cluster Setup
 ```bash
 #!/bin/bash
 # Purpose: Kubernetes Cluster
