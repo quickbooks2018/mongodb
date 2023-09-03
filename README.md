@@ -374,6 +374,7 @@ helm search repo bitnami/mongodb
 helm search repo bitnami/mongodb --versions
 helm show values bitnami/mongodb --version 13.18.1
 helm upgrade --install mongodb bitnami/mongodb \
+--version 13.18.1 \
 --namespace mongodb \
 --create-namespace \
 --set architecture=replicaset \
