@@ -129,3 +129,43 @@ use your_database_name
 ```
 
 - 3. show collections
+
+
+- Kubernetes Bitnami Helm Chart Deployment
+```bash
+helm repo ls
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo update
+helm search repo bitnami
+helm search repo bitnami/mongodb
+helm search repo bitnami/mongodb --versions
+helm show values bitnami/mongodb --version 13.18.1
+helm upgrade --install mongodb bitnami/mongodb \
+  --namespace mongodb \
+  --create-namespace \
+  --set architecture=replicaset \
+  --set auth.enabled=true \
+  --set auth.rootPassword=rootpassword \
+  --set auth.username=my-user \
+  --set auth.password=my-password \
+  --set auth.database=my-database \
+  --set replicaSet.enabled=true \
+  --set replicaSet.replicas.secondary=2 \
+  --set persistence.size=50Gi \
+  --wait --timeout 600s
+```
+
+- 3 Worker Nodes (--set replicaSet.replicas.secondary=2 and mongodb-arbiter-0 )
+
+- mongodb-arbiter
+```bash
+The MongoDB arbiter is part of a MongoDB replica set, and its primary role is to participate in elections to decide which member of the replica set will become the primary. Arbiters do not hold any data and are not involved in regular read and write operations. Because they do not hold a copy of the data set, they use fewer system resources.
+``````
+```bash
+kubectl get pods -n mongodb -o wide
+NAME                READY   STATUS    RESTARTS   AGE     IP            NODE                 NOMINATED NODE   READINESS GATES
+mongodb-0           1/1     Running   0          3m7s    10.244.2.13   cloudgeeks-worker    <none>           <none>
+mongodb-1           1/1     Running   0          2m49s   10.244.3.12   cloudgeeks-worker3   <none>           <none>
+mongodb-arbiter-0   1/1     Running   0          3m7s    10.244.1.5    cloudgeeks-worker2   <none>           <none>
+```
+
