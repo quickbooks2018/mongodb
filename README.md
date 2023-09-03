@@ -141,18 +141,18 @@ helm search repo bitnami/mongodb
 helm search repo bitnami/mongodb --versions
 helm show values bitnami/mongodb --version 13.18.1
 helm upgrade --install mongodb bitnami/mongodb \
-  --namespace mongodb \
-  --create-namespace \
-  --set architecture=replicaset \
-  --set auth.enabled=true \
-  --set auth.rootPassword=rootpassword \
-  --set auth.username=my-user \
-  --set auth.password=my-password \
-  --set auth.database=my-database \
-  --set replicaSet.enabled=true \
-  --set replicaSet.replicas.secondary=2 \
-  --set persistence.size=50Gi \
-  --wait --timeout 600s
+--namespace mongodb \
+--create-namespace \
+--set architecture=replicaset \
+--set auth.enabled=true \
+--set auth.rootPassword=rootpassword \
+--set auth.username=my-user \
+--set auth.password=my-password \
+--set auth.database=my-database \
+--set replicaSet.enabled=true \
+--set replicaSet.replicas.secondary=2 \
+--set persistence.size=50Gi \
+--wait --timeout 600s
 ```
 
 - 3 Worker Nodes (--set replicaSet.replicas.secondary=2 and mongodb-arbiter-0 )
