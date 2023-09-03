@@ -68,6 +68,11 @@ docker run -id --network poc --name mongo-node3 \
 docker exec -it mongo-node1 mongo -u mongoadmin -p secret
 ```
 
+- login to mongo
+```bash
+mongo -u mongoadmin -p secret --authenticationDatabase admin
+```
+- Initiate the Replica Set:
 ```bash
 rs.initiate({
    _id: "myrs",
@@ -129,6 +134,102 @@ use your_database_name
 ```
 
 - 3. show collections
+
+- AWS EC2 HA Mode
+
+- aws private hosted zone policy
+```bash
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowChangeResourceRecordSets",
+      "Effect": "Allow",
+      "Action": [
+        "route53:ChangeResourceRecordSets",
+        "route53:ListResourceRecordSets"
+      ],
+      "Resource": "arn:aws:route53:::hostedzone/YOUR_PRIVATE_HOSTED_ZONE_ID"
+    },
+    {
+      "Sid": "AllowViewHostedZone",
+      "Effect": "Allow",
+      "Action": [
+        "route53:GetHostedZone",
+        "route53:ListHostedZones"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+```
+
+- When you enable replication and security, MongoDB expects you to provide a shared key file that each member uses to authenticate to other members in the replica set. This key file must be the same for all members.
+- In case of multiple aws ec2 Create a keyfile locally and copy to all the nodes
+```bash
+openssl rand -base64 756 > ${PWD}/mongo-keyfile
+chmod 400 ${PWD}/mongo-keyfile
+chown 999:999 ${PWD}/mongo-keyfile
+```
+
+
+- Note: mongosh will not be available in this 4.4.minor version
+
+- Container 1
+```bash
+docker run -id --network host --name mongo-node1 \
+    --hostname mongo-node1.cloudgeeks.mongo \
+    -v ${PWD}/mongo-keyfile:/etc/mongo/mongo-keyfile \
+    -v mongo-node1-config:/etc/mongo \
+    -v mongo-node1-data:/data/db \
+    -e MONGO_INITDB_ROOT_USERNAME=mongoadmin \
+    -e MONGO_INITDB_ROOT_PASSWORD=secret \
+    mongo:4.4.23 --replSet myrs --keyFile /etc/mongo/mongo-keyfile
+```
+
+- Container 2
+```bash
+docker run -id --network host --name mongo-node2 \
+    --hostname mongo-node2.cloudgeeks.mongo \
+    -v ${PWD}/mongo-keyfile:/etc/mongo/mongo-keyfile \
+    -v mongo-node2-config:/etc/mongo \
+	-v mongo-node2-data:/data/db \
+	-e MONGO_INITDB_ROOT_USERNAME=mongoadmin \
+	-e MONGO_INITDB_ROOT_PASSWORD=secret \
+	mongo:4.4.23 --replSet myrs --keyFile /etc/mongo/mongo-keyfile
+```
+
+- Container 3
+```bash
+docker run -id --network host --name mongo-node3 \
+    --hostname mongo-node3.cloudgeeks.mongo \
+    -v ${PWD}/mongo-keyfile:/etc/mongo/mongo-keyfile \
+    -v mongo-node3-config:/etc/mongo \
+	-v mongo-node3-data:/data/db \
+	-e MONGO_INITDB_ROOT_USERNAME=mongoadmin \
+	-e MONGO_INITDB_ROOT_PASSWORD=secret \
+	mongo:4.4.23 --replSet myrs --keyFile /etc/mongo/mongo-keyfile
+```
+- login to mongo
+```bash
+mongo -u mongoadmin -p secret --authenticationDatabase admin
+```
+- Initiate the Replica Set:
+```bash
+rs.initiate({
+   _id: "myrs",
+   members: [
+       { _id: 0, host: "mongo-node1.cloudgeeks.mongo:27017" },
+       { _id: 1, host: "mongo-node2.cloudgeeks.mongo:27017" },
+       { _id: 2, host: "mongo-node3.cloudgeeks.mongo:27017" }
+   ]
+});
+```
+
+- to retrieve the status of the replica set
+```bash
+rs.status() 
+```
 
 
 - Kubernetes Bitnami Helm Chart Deployment
