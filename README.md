@@ -1,5 +1,9 @@
 # MongoDb Replica Set
 
+## DNS Lookup
+```bash
+nslookup _mongodb._tcp.ENDPOINT
+```
 - Useful Links
 - https://hub.docker.com/_/mongo
 - https://www.mongodb.com/docs/v4.4/
