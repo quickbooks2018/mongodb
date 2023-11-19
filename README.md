@@ -3,6 +3,7 @@
 ## DNS Lookup
 ```bash
 nslookup _mongodb._tcp.ENDPOINT
+dig SRV _mongodb._tcp.cluster-devops-0.rzkdltt.mongodb.net
 ```
 - Useful Links
 - https://hub.docker.com/_/mongo
