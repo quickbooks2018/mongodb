@@ -5,6 +5,20 @@
 nslookup _mongodb._tcp.ENDPOINT
 dig SRV _mongodb._tcp.cluster-devops-0.rzkdltt.mongodb.net
 ```
+
+### Mongodb WebUI Client
+```bash
+docker run --name mongo-webui -id -p 3000:3000 mongoclient/mongoclient:latest
+```
+
+### - MongoAtlas Connection String
+```bash
+mongodb+srv://USERNAME:PASSWORD@CLUSTER-ADDRESS/DATABASENAME?retryWrites=true&w=majority
+```
+```bash
+kubectl run mongo-webui --port 3000 --image mongoclient/mongoclient:latest -n default
+```
+
 - Useful Links
 - https://hub.docker.com/_/mongo
 - https://www.mongodb.com/docs/v4.4/
