@@ -11,7 +11,7 @@ dig SRV _mongodb._tcp.cluster-devops-0.rzkdltt.mongodb.net
 docker run --name mongo-webui -id -p 3000:3000 mongoclient/mongoclient:latest
 ```
 
-### - MongoAtlas Connection String
+###  MongoAtlas Connection String
 ```bash
 mongodb+srv://USERNAME:PASSWORD@CLUSTER-ADDRESS/DATABASENAME?retryWrites=true&w=majority
 ```
