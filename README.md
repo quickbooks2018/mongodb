@@ -7,8 +7,34 @@ dig SRV _mongodb._tcp.cluster-devops-0.rzkdltt.mongodb.net
 ```
 
 ### Mongodb WebUI Client
+- docker
 ```bash
-docker run --name mongo-webui -id -p 3000:3000 mongoclient/mongoclient:latest
+docker run --name mongo-ui -e MONGO_URL='mongodb+srv://USERNAME:PASSWORD@cluster-devops-0.rzkdltt.mongodb.net' -p 4321:4321 -id quickbooks2018/mongo-gui:latest
+```
+- kubernetes
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-gui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-gui
+  template:
+    metadata:
+      labels:
+        app: mongo-gui
+    spec:
+      containers:
+      - name: mongo-gui
+        image: ugleiton/mongo-gui
+        ports:
+        - containerPort: 4321
+        env:
+        - name: MONGO_URL
+          value: "mongodb+srv://USERNAME:PASSWORD@cluster-devops-0.rzkdltt.mongodb.net"
 ```
 
 - Ubuntu Setuo Mongo Client WebUI https://github.com/quickbooks2018/aws/blob/master/kubernetes-mongodb-client
