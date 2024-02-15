@@ -5,6 +5,46 @@
 nslookup -type=SRV _mongodb._tcp.ENDPOINT
 dig SRV _mongodb._tcp.cluster-devops-0.rzkdltt.mongodb.net
 ```
+### Mongo CLi Client
+```bash
+kubectl run -i --tty --rm mongodb-client --image=mongo:latest --namespace=nodejs
+
+kubectl run mongodb-client --image=mongo:latest -n nodejs
+```
+- Mongo Connect
+```bash
+# connect to mongo
+mongo
+
+MongoDB Shell
+######################################################
+1. List Databases: To list databases, use the command:
+######################################################
+ show dbs
+
+####################
+2. List Collections:
+####################
+use your_database_name
+
+###################
+3. list collections
+###################
+
+show collections
+
+####################################################
+# If the database does not exist, it will be created:
+####################################################
+use dbname
+db.createUser({user:'username',pwd:'password',roles:[{role:'dbOwner', db:'dbname'}]});
+
+###############
+# drop database
+###############
+use dbname
+db.dropDatabase()
+``` 
 
 ### Mongodb WebUI Client
 - docker
