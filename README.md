@@ -7,8 +7,6 @@ dig SRV _mongodb._tcp.cluster-devops-0.rzkdltt.mongodb.net
 ```
 ### Mongo CLi Client
 ```bash
-kubectl run -i --tty --rm mongodb-client --image=mongo:latest --namespace=nodejs
-
 kubectl run mongodb-client --image=mongo:latest -n nodejs
 ```
 - Mongo Connect
