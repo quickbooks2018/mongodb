@@ -490,3 +490,48 @@ mongodb-1           1/1     Running   0          2m49s   10.244.3.12   cloudgeek
 mongodb-arbiter-0   1/1     Running   0          3m7s    10.244.1.5    cloudgeeks-worker2   <none>           <none>
 ```
 
+- argocd yaml
+```bash
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mongodb
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: mongodb
+    targetRevision: 15.1.7
+    helm:
+      parameters:
+        - name: architecture
+          value: replicaset
+        - name: auth.enabled
+          value: "true"
+        - name: auth.rootPassword
+          value: 123456789
+        - name: auth.username
+          value: user
+        - name: auth.password
+          value: 987654321
+        - name: auth.database
+          value: mongo-dev
+        - name: replicaSet.enabled
+          value: "true"
+        - name: replicaSet.replicas.secondary
+          value: "1"
+        - name: persistence.size
+          value: 50Gi
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: mongodb
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=false
+      - ServerSideApply=false
+```
