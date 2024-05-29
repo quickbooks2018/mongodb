@@ -535,3 +535,8 @@ spec:
       - ApplyOutOfSyncOnly=false
       - ServerSideApply=false
 ```
+
+- connection
+```bash
+mongosh 'mongodb://user:987654321@mongodb-headless.mongodb.svc.cluster.local:27017/mongo-dev?readPreference=secondary&tls=false'
+```
