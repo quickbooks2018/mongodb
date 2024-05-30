@@ -86,6 +86,30 @@ mongodb+srv://USERNAME:PASSWORD@CLUSTER-ADDRESS/DATABASENAME?retryWrites=true&w=
 ```bash
 kubectl run mongo-webui --port 3000 --image mongoclient/mongoclient:latest -n default
 ```
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-webui
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-webui
+  template:
+    metadata:
+      labels:
+        app: mongo-webui
+    spec:
+      containers:
+      - name: mongo-webui
+        image: mongoclient/mongoclient:latest
+        ports:
+        - containerPort: 3000
+        securityContext:
+          runAsUser: 0
+```
 
 - Useful Links
 - https://hub.docker.com/_/mongo
